@@ -138,28 +138,4 @@ quotes_db = [
     }
 ]
 
-# 根據 tag 配對名言
-
-def get_quote_by_tag(tag):
-    for item in quotes_db:
-        if tag in item["tags"]:
-            return item
-    return None
-
-# 範例用法
-if __name__ == "__main__":
-    print("歡迎來到心靈建議平台！請輸入你想詢問的主題（如：勇氣、熱情、工作），或輸入 exit 離開。")
-    while True:
-        user_tag = input("請輸入主題：").strip()
-        if user_tag.lower() == "exit":
-            print("感謝使用，祝福你！")
-            break
-        result = get_quote_by_tag(user_tag)
-        if result:
-            print(f"\n『{result['quote']}』")
-            print(f"— {result['author']}（{result['role']}）")
-            print(result['shortBio'])
-            print("建議：" + result['suggestion'] + "\n")
-        else:
-            print("很抱歉，目前沒有相關主題的名言。請嘗試其他主題。\n")
 
