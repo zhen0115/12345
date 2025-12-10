@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>心靈建議平台</title>
+    <style>
+        body { font-family: 'Noto Sans TC', Arial, sans-serif; background: #f7f7f7; color: #222; }
+        .container { max-width: 480px; margin: 60px auto; background: #fff; border-radius: 12px; box-shadow: 0 2px 12px #0001; padding: 32px; }
+        h1 { text-align: center; color: #4a90e2; }
+        input, button { font-size: 1.1em; padding: 8px; border-radius: 6px; border: 1px solid #ccc; }
+        button { background: #4a90e2; color: #fff; border: none; margin-left: 8px; cursor: pointer; }
+        .quote-block { margin-top: 32px; background: #f0f4fa; border-radius: 8px; padding: 20px; }
+        .author { color: #888; margin-top: 8px; }
+        .bio, .suggestion { margin-top: 8px; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>心靈建議平台</h1>
+    <p>請輸入你想詢問的主題（如：勇氣、熱情、工作）：</p>
+    <input type="text" id="tagInput" placeholder="請輸入主題...">
+    <button onclick="showQuote()">獲得建議</button>
+    <div id="result" class="quote-block" style="display:none;"></div>
+</div>
+<script>
+const quotes_db = [
+    {
+        quote: "It always seems impossible until it's done.",
+        author: "Nelson Mandela",
+        role: "前南非總統、反種族隔離運動領袖",
+        source: "演講，2001年",
+        tags: ["勇氣", "堅持", "改變"],
+        shortBio: "曼德拉因反種族隔離被監禁27年，出獄後領導南非民主轉型。",
+        suggestion: "當你覺得目標遙不可及時，分解成小步驟並持續行動。"
+    },
+    {
+        quote: "The only way to do great work is to love what you do.",
+        author: "Steve Jobs",
+        role: "蘋果公司共同創辦人、企業家",
+        source: "史丹佛畢業演講，2005年",
+        tags: ["熱情", "工作", "創新"],
+        shortBio: "Jobs 創辦 Apple，帶動多次產業創新。",
+        suggestion: "找能讓你投入的方向，持久的熱情會放大你的成長。"
+    }
+];
+
+function showQuote() {
+    const tag = document.getElementById('tagInput').value.trim();
+    const resultDiv = document.getElementById('result');
+    if (!tag) {
+        resultDiv.style.display = 'none';
+        return;
+    }
+    const found = quotes_db.find(item => item.tags.includes(tag));
+    if (found) {
+        resultDiv.innerHTML = `
+            <div>『${found.quote}』</div>
+            <div class="author">— ${found.author}（${found.role}）</div>
+            <div class="bio">${found.shortBio}</div>
+            <div class="suggestion"><b>建議：</b>${found.suggestion}</div>
+        `;
+    } else {
+        resultDiv.innerHTML = '很抱歉，目前沒有相關主題的名言。請嘗試其他主題。';
+    }
+    resultDiv.style.display = 'block';
+}
+</script>
+</body>
+</html>
