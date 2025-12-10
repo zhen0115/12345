@@ -7,25 +7,45 @@
     <style>
         body {
             font-family: 'Noto Sans TC', Arial, sans-serif;
-            background: linear-gradient(135deg, #e3f0ff 0%, #f7e9ff 100%);
+            background: #f7f7ff;
             color: #333;
             margin: 0;
+            min-height: 100vh;
+            position: relative;
+        }
+        .creative-bg {
+            position: fixed;
+            z-index: 0;
+            top: 0; left: 0; right: 0; bottom: 0;
+            pointer-events: none;
+            background: radial-gradient(circle at 20% 30%, #a8cfff55 0%, #fff0 60%),
+                        radial-gradient(circle at 80% 70%, #f7e9ff66 0%, #fff0 60%),
+                        radial-gradient(circle at 60% 10%, #ffe6e6aa 0%, #fff0 70%);
+            animation: bgMove 12s linear infinite alternate;
+        }
+        @keyframes bgMove {
+            0% { background-position: 20% 30%, 80% 70%, 60% 10%; }
+            100% { background-position: 30% 40%, 70% 60%, 50% 20%; }
         }
         .container {
-            max-width: 480px;
-            margin: 60px auto;
+            position: relative;
+            z-index: 1;
+            max-width: 520px;
+            margin: 60px auto 0 auto;
             background: #fff;
-            border-radius: 18px;
-            box-shadow: 0 4px 24px #b6b6e633;
-            padding: 40px 32px 32px 32px;
+            border-radius: 22px;
+            box-shadow: 0 6px 32px #b6b6e633;
+            padding: 48px 36px 36px 36px;
             border: 1px solid #f0eaff;
         }
         h1 {
             text-align: center;
             color: #7b6eea;
-            font-weight: 700;
+            font-weight: 800;
             letter-spacing: 2px;
             margin-bottom: 18px;
+            font-size: 2.1em;
+            text-shadow: 0 2px 8px #e3f0ff;
         }
         p {
             text-align: center;
@@ -40,18 +60,20 @@
             margin-bottom: 24px;
         }
         .theme-btn {
-            background: #f7f5ff;
+            background: linear-gradient(90deg, #f7f5ff 0%, #e3f0ff 100%);
             color: #7b6eea;
             border: 1px solid #d1c4e9;
             border-radius: 20px;
-            padding: 7px 18px;
+            padding: 8px 20px;
             font-size: 1em;
             cursor: pointer;
-            transition: background 0.2s, color 0.2s;
+            transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+            box-shadow: 0 1px 4px #e3f0ff88;
         }
         .theme-btn.active, .theme-btn:hover {
-            background: #7b6eea;
+            background: linear-gradient(90deg, #7b6eea 0%, #a8cfff 100%);
             color: #fff;
+            box-shadow: 0 2px 8px #a8cfff55;
         }
         .card-area {
             display: flex;
@@ -60,28 +82,30 @@
         }
         .quote-card {
             min-width: 320px;
-            max-width: 420px;
-            background: #fff;
-            border-radius: 18px;
-            box-shadow: 0 4px 24px #b6b6e633;
+            max-width: 440px;
+            background: linear-gradient(120deg, #f7f5ff 60%, #e3f0ff 100%);
+            border-radius: 22px;
+            box-shadow: 0 6px 32px #b6b6e633;
             border: 1px solid #e3e0f7;
-            padding: 32px 24px 24px 24px;
+            padding: 36px 28px 28px 28px;
             margin-bottom: 18px;
             text-align: center;
             opacity: 0;
-            transform: translateY(30px);
-            animation: fadeInUp 0.5s forwards;
+            transform: translateY(30px) scale(0.98) rotate(-2deg);
+            animation: fadeInUp 0.7s cubic-bezier(.4,1.6,.6,1) forwards;
+            position: relative;
         }
         @keyframes fadeInUp {
             to {
                 opacity: 1;
-                transform: translateY(0);
+                transform: translateY(0) scale(1) rotate(0);
             }
         }
         .quote-card .quote {
-            font-size: 1.25em;
+            font-size: 1.35em;
             color: #4a90e2;
-            font-weight: 600;
+            font-weight: 700;
+            margin-bottom: 10px;
         }
         .quote-card .author {
             color: #7b6eea;
@@ -99,6 +123,13 @@
             font-size: 1.1em;
             font-weight: 500;
         }
+        .quote-card:before {
+            content: "\1F381";
+            position: absolute;
+            left: 18px; top: 18px;
+            font-size: 1.5em;
+            opacity: 0.18;
+        }
         .next-btn {
             background: linear-gradient(90deg, #a8cfff 0%, #c7b6ea 100%);
             color: #fff;
@@ -109,14 +140,27 @@
             font-weight: 600;
             box-shadow: 0 2px 8px #b6b6e633;
             cursor: pointer;
-            transition: background 0.2s;
+            transition: background 0.2s, transform 0.1s;
         }
         .next-btn:hover {
             background: linear-gradient(90deg, #7b6eea 0%, #a8cfff 100%);
+            transform: scale(1.06);
+        }
+        .footer-tip {
+            text-align: center;
+            color: #b6b6e6;
+            font-size: 0.98em;
+            margin-top: 30px;
+            letter-spacing: 1px;
+        }
+        @media (max-width: 600px) {
+            .container { padding: 18px 2vw 18px 2vw; }
+            .quote-card { min-width: 0; max-width: 98vw; padding: 18px 4vw; }
         }
     </style>
 </head>
 <body>
+<div class="creative-bg"></div>
 <div class="container">
     <h1>心靈建議平台</h1>
     <p>請選擇你想詢問的主題（如：勇氣、熱情、工作、學習、夢想、謙虛、誠實、逆境、未來、成長、科學、自我...）</p>
@@ -125,6 +169,7 @@
         <div id="quoteCard" class="quote-card" style="display:none;"></div>
         <button id="nextBtn" class="next-btn" style="display:none;">再來一句</button>
     </div>
+    <div class="footer-tip">💡 點擊主題或「再來一句」獲得不同靈感！</div>
 </div>
 <script>
 const quotes_db = [
@@ -273,7 +318,3 @@ document.getElementById('nextBtn').onclick = showRandomQuote;
 </script>
 </body>
 </html>
-
-    
- 
-  
